@@ -42,16 +42,16 @@ function App() {
       <h1>Aylon Cohen</h1>
       <p>Software Developer</p>
       <div className="social-links">
-      <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/aylonc22" target="_blank" rel="noopener noreferrer">
         <img src={github} alt="GitHub" />
       </a>
-      <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.linkedin.com/in/aylon-cohen-b01b38232/" target="_blank" rel="noopener noreferrer">
         <img src={linkedin} alt="LinkedIn" />
       </a>
     </div>
       <div className="location">
         <img src={location} alt="Location" />
-        <span>Based in Tel Aviv, Israel</span>
+        <span>Tel Aviv, Israel</span>
       </div>
         <section>
         <h2>Tech Stack</h2>
