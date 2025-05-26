@@ -23,6 +23,69 @@ header p {
   font-size: 1.2em;
   margin-top: 1rem;
 }
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  box-shadow: 0 0 10px #000;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1em;
+  color: #74c0fc;
+}
+
+.location img {
+  width: 20px;
+  height: 20px;
+  filter: invert(30%) sepia(100%) saturate(600%) hue-rotate(180deg);
+}
+
+
+
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.social-links img {
+  height: 30px;
+  transition: transform 0.2s ease;
+}
+
+.social-links a:hover img {
+  transform: scale(1.1);
+}
+
+.social-links img[alt="GitHub"] {
+  filter: brightness(0) invert(1);
+}
+
+.social-links a:hover img[alt="GitHub"] {
+  filter: brightness(0.7) invert(1);
+}
+
 section {
   max-width: 900px;
   margin: 4rem auto;
@@ -33,9 +96,18 @@ h2 {
   border-bottom: 1px solid #333;
   padding-bottom: 0.5rem;
 }
+
 .stack-icons img {
   height: 40px;
   margin: 0.5rem;
+  animation: slideFadeIn 1.5s ease-out forwards;
+  animation-delay: calc(var(--i) * 0.2s);
+  opacity: 0;
+ 
+}
+
+.stack-icons img:hover{
+  transform: scale(1.1);
 }
 .projects {
   display: grid;
