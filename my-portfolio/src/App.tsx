@@ -52,9 +52,7 @@ function App() {
       <div className="location">
         <img src={location} alt="Location" />
         <span>Tel Aviv, Israel</span>
-      </div>
-        <section>
-        <h2>Tech Stack</h2>
+      </div>             
         <div className="stack-icons">
         {stack.map((tech, index) => (
         <img
@@ -64,8 +62,7 @@ function App() {
           alt={tech.alt}
         />
       ))}
-        </div>
-      </section>
+        </div>     
     </header>
 
     <section>
