@@ -65,6 +65,20 @@ function App() {
         </div>     
     </header>
 
+    <section className="about">
+  <h2>About Me</h2>
+  <p>
+    Energetic and detail-oriented <strong>Fullstack Developer</strong> with 3+ years of hands-on experience
+    building web, desktop, and cloud-based applications. Skilled in transforming complex requirements
+    into clean, scalable solutions. Proven track record in full project ownership — from backend APIs
+    to frontend interfaces and cloud deployment — delivering reliable systems in both team and solo environments.
+  </p>
+  <p>
+    Outside of coding, I’m a passionate <strong>volleyball player</strong>, an experience that sharpened
+    my teamwork, discipline, and leadership skills.
+  </p>
+</section>
+
   <section>
   <h2>Experience</h2>
   <div className="experience-list">
