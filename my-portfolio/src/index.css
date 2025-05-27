@@ -110,6 +110,40 @@ h2 {
 .stack-icons{
   margin: 3rem auto;
 }
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.experience-item h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: #e0e0e0;
+}
+
+.experience-item h3 span {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.experience-item .role {
+  font-weight: bold;
+  color: #74c0fc;
+  margin-top: 0.5rem;
+}
+
+.experience-item .desc {
+  margin-top: 0.3rem;
+  line-height: 1.5;
+  color: #ccc;
+}
+
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
