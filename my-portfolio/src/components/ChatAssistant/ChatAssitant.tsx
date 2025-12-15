@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import './ChatAssitant.css'
+import { getGroqResponse } from "../../api/groq";
 
 const ChatAssitant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [index, setIndex] = useState(0);
     const [displayText, setDisplayText] = useState("");
+    const [respone, setRespone] = useState("");
 
     const PHRASES :string[] =[
         "👨‍💻 Peek my code?",
@@ -22,8 +24,8 @@ const DISPLAY_DURATION = 4000;
 
 useEffect(()=>{
     let charIndex = 0;
-    let typingInterval:number;
-    let timeout:number;
+    let typingInterval:ReturnType<typeof setInterval>;
+    let timeout:ReturnType<typeof setTimeout>;
 
     const currentPhrase = PHRASES[index];
     setDisplayText("");
@@ -46,7 +48,12 @@ useEffect(()=>{
     }
 }, [index]);
 
-
+const handleSend = async () => {
+    if(message.length < 1) return;
+    const test = await getGroqResponse(message);
+    setRespone(test);
+    console.log(test);
+}
 
     return isOpen ?  <div className="chat-window">
         <div className="chat-header">
@@ -57,12 +64,12 @@ useEffect(()=>{
         </div>
 
         <div className="chat-body">
-        Chat content goes here
+        {respone.length > 0 ? respone :"Chat content goes here"}
         </div>
 
         <div className="chat-input">
         <input onChange={e=>setMessage(e.target.value)} placeholder="Type a message..." />
-        <button>Send</button>
+        <button onClick={()=>handleSend()}>Send</button>
         </div>
     </div>:
     <div className="chat-launcher">
