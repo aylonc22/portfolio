@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import './ChatAssitant.css'
 import { getGroqResponse } from "../../api/groq";
 import { typeText } from "../../utility/text";
+import Body from "./Body/Body";
 
 
 type ChatMessage = {
@@ -132,37 +133,7 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
         </button>
         </div>
 
-        <div className="chat-body">
-            {messages.map((msg, i) => (
-                    <div
-                    key={i}
-                    className={`chat-row ${msg.role === 'user' ? 'right' : 'left'}`}
-                    >
-                    {msg.role === 'assistant' && (
-                        <div className="chat-avatar">
-                            <span className="logo">&gt;</span>
-                            <span className="cursor">_</span>
-                        </div>
-                    )}
-
-                    <div className={`chat-bubble ${msg.role}`}>
-                        {msg.isTyping ? (
-                        <span className="typing-dots">
-                            <span></span><span></span><span></span>
-                        </span>
-                        ) : (
-                        msg.content
-                        )}
-                    </div>
-                    {msg.role === 'user' && (
-                        <div className="chat-user">
-                            <span className="logo">&lt;</span>
-                            <span className="cursor">_</span>
-                        </div>
-                    )}
-                    </div>
-                ))}      
-        </div>
+        <Body messages={messages}/>
 
         <div className="chat-input">
         <input onKeyDown={(e)=>handleKeyDown(e)} onChange={e=>setMessage(e.target.value)} value={message} placeholder="Type a message..." />
