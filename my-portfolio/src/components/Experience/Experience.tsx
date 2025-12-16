@@ -9,7 +9,7 @@ const Experience = () => {
                     <p className="desc">
                         Developed backend REST APIs and frontend React components for real-time social listening and automation.
                         Led the design and deployment of a multi-service Dockerized architecture on AWS ECS. Built CI/CD pipelines and monitoring for platform stability, 
-                        and integrated AI modules (e.g., ChatGPT) to automate engagement workflows.
+                        and integrated AI modules (e.g., GPT) to automate engagement workflows.
                     </p>
                     </div>
                     <div className="experience-item">

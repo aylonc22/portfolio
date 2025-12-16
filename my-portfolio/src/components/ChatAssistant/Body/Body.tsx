@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { ChatMessage } from "../../../Types/chat";
 import './Body.css'
 
@@ -5,6 +6,13 @@ type BodyProps = {
     messages: ChatMessage[]
 }
 const Body = ({ messages }:BodyProps) => {
+
+    const chatEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(()=>{
+        chatEndRef.current?.scrollIntoView({behavior:"smooth"});
+    },[messages]);
+    
     return (
         <div className="chat-body">
             {messages.map((msg, i) => (
@@ -34,6 +42,7 @@ const Body = ({ messages }:BodyProps) => {
                             <span className="cursor">_</span>
                         </div>
                     )}
+                    <div ref={chatEndRef}/>
                     </div>
                 ))}      
         </div>
