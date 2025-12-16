@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
 import './ChatAssitant.css'
 import { getGroqResponse } from "../../api/groq";
+import { typeText } from "../../utility/text";
+
+
+type ChatMessage = {
+    role: 'user' | 'assistant';
+    content: string;
+    isTyping?: boolean;
+};
 
 const ChatAssitant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState<ChatMessage[]>(()=>{
+        const stored = localStorage.getItem('chat');
+        return stored ? JSON.parse(stored) : [];
+    });
     const [index, setIndex] = useState(0);
-    const [displayText, setDisplayText] = useState("");
-    const [respone, setRespone] = useState("");
+    const [displayText, setDisplayText] = useState("");   
+    const [loading, setLoading] = useState(false);
 
     const PHRASES :string[] =[
-        "👨‍💻 Peek my code?",
-        "🚀 Check projects",
-        "⚡ Curious about tech?",
-        "💡 Ask a dev tip",
-        "🛠 How I built this",
-        "🤔 Wanna see logic?",
+        "Ask me about aylon",
     ]
 
 
@@ -48,27 +55,117 @@ useEffect(()=>{
     }
 }, [index]);
 
+useEffect(() => {
+    localStorage.setItem('chat', JSON.stringify(messages));    
+}, [messages]);
+
+useEffect(() => {
+    const saved = localStorage.getItem('chat');
+    if (saved) setMessages(JSON.parse(saved));
+}, []);
+
 const handleSend = async () => {
-    if(message.length < 1) return;
-    const test = await getGroqResponse(message);
-    setRespone(test);
-    console.log(test);
+    if(message.trim().length < 1 || loading) return;
+    const userMessage: ChatMessage = {
+    role: 'user',
+    content: message,
+    };
+
+    const typingMessage: ChatMessage = {
+    role: 'assistant',
+    content: '...',
+    isTyping: true,
+    };
+    setMessages(prev=>[...prev,userMessage,typingMessage]);
+    setMessage("");
+    setLoading(true)
+    const data = await getGroqResponse(message);   
+    if(data != "Oops, something went wrong."){
+        setMessages((prev) => {
+            const copy = [...prev];
+            copy[copy.length - 1] = {
+                role: 'assistant',
+                content: '',
+            };
+            return copy;
+            });
+    } else{
+        setMessages((prev) => {
+        const copy = [...prev];
+        copy[copy.length - 1] = {
+            role: 'assistant',
+            content: '',
+        };
+        return copy;
+        });
+    }
+    const text =
+    data !== "Oops, something went wrong."
+    ? data
+    : "Error. Please try again.";
+    typeText(text, (partial) => {
+            setMessages((prev) => {
+            const copy = [...prev];
+            copy[copy.length - 1] = {
+                role: 'assistant',
+                content: partial,
+            };
+            return copy;
+            });
+        });
+    setLoading(false);
+    
+}
+
+const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+    if (e.key === 'Enter' && !e.shiftKey) { 
+        e.preventDefault();
+            handleSend();
+    }
 }
 
     return isOpen ?  <div className="chat-window">
         <div className="chat-header">
-        <span>Assistant</span>
+        <span>Aylon's Assistant</span>
         <button className="chat-close" onClick={() => setIsOpen(false)}>
             ✕
         </button>
         </div>
 
         <div className="chat-body">
-        {respone.length > 0 ? respone :"Chat content goes here"}
+            {messages.map((msg, i) => (
+                    <div
+                    key={i}
+                    className={`chat-row ${msg.role === 'user' ? 'right' : 'left'}`}
+                    >
+                    {msg.role === 'assistant' && (
+                        <div className="chat-avatar">
+                            <span className="logo">&gt;</span>
+                            <span className="cursor">_</span>
+                        </div>
+                    )}
+
+                    <div className={`chat-bubble ${msg.role}`}>
+                        {msg.isTyping ? (
+                        <span className="typing-dots">
+                            <span></span><span></span><span></span>
+                        </span>
+                        ) : (
+                        msg.content
+                        )}
+                    </div>
+                    {msg.role === 'user' && (
+                        <div className="chat-user">
+                            <span className="logo">&lt;</span>
+                            <span className="cursor">_</span>
+                        </div>
+                    )}
+                    </div>
+                ))}      
         </div>
 
         <div className="chat-input">
-        <input onChange={e=>setMessage(e.target.value)} placeholder="Type a message..." />
+        <input onKeyDown={(e)=>handleKeyDown(e)} onChange={e=>setMessage(e.target.value)} value={message} placeholder="Type a message..." />
         <button onClick={()=>handleSend()}>Send</button>
         </div>
     </div>:
