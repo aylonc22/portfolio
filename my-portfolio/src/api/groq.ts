@@ -1,6 +1,6 @@
 export async function getGroqResponse(prompt: string): Promise<string> {
     try {
-        const res = await fetch('http://localhost:3000/api/groq', {
+        const res = await fetch('/api/groq', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
