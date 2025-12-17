@@ -28,7 +28,7 @@ const Body = ({ messages }:BodyProps) => {
                     )}
 
                     <div className={`chat-bubble ${msg.role}`}>
-                        {msg.isTyping ? (
+                        {msg.isTyping && msg.content === '...' ? (
                         <span className="typing-dots">
                             <span></span><span></span><span></span>
                         </span>

@@ -64,9 +64,10 @@ useEffect(() => {
     const saved = localStorage.getItem('chat');
     if (saved) setMessages(JSON.parse(saved));
 }, []);
-
+console.log(messages);
 const handleSend = async () => {
     if(message.trim().length < 1 || loading) return;
+    if(messages[messages.length-1]?.isTyping) return;
     const userMessage: ChatMessage = {
     role: 'user',
     content: message,
@@ -110,6 +111,7 @@ const handleSend = async () => {
             copy[copy.length - 1] = {
                 role: 'assistant',
                 content: partial,
+                isTyping: text != partial
             };
             return copy;
             });
